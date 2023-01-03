@@ -1,31 +1,64 @@
-from functions import deck, subtrai_carta
-from classes import User
+from sys import exit
+from time import sleep
+from classes import Dealer, User
+from functions import header
 
-# config player
+# >Main program<
+
+header("♠ Let's start!")
+
 user = User()
-print(user.cards)
+user.first_cards()
+dealer = Dealer()
+dealer.first_cards()
 
-# config user.hand (issovai ficar def da class)
-for i in user.cards:
-    for j in deck:
-        if i == j['face'] and i != 'A':
-            user.hand += j['value']
-        elif i == j['face'] and i == 'A':
-            if user.hand + j['value'][0] > 21:
-                user.hand += j['value'][1]
-            else:
-                user.hand += j['value'][0]
+header("♠ The beginning.... ")
+
+print(f'✅ {user.name}, your cards is {user.cards} and total score is {user.score}')
+print(f"\n✅ The {dealer.name}'s cards is {dealer.initial_cards}.")
 
 
-# exibir cartas dos jogadores
-print(f'{user.name}, suas cartas são {user.cards} com o total de {user.hand}')
-
-# perguntar se quer jogar novamente
+header("♠ Let's continue?")
 while True:
-    decision = input('y or n: ').strip()
-    if decision in "Yy":
-        user.cards.append(subtrai_carta())
-        print(f'{user.name}, suas cartas são {user.cards} com o total de {user.hand}')
-        print(deck)
-    else:
-        break
+    choice = input('✅ Do you want get one more card ,Y or N?\n').strip()
+    if choice in "yY":
+        user.get_card()
+        if user.score > 21:
+            header('😢You loose...')
+            print(
+                f'❌ You current cards is {user.cards}, {user.score} total scores')
+            print(
+                f"❌ The Dealer's card was {dealer.cards}, {dealer.score} total scores")
+            print()
+            exit()
+        else:
+            header('♠ Updating...')
+            print(
+                f'\n✅ You current cards is {user.cards}, {user.score} total scores\n')
+            print(f"\n✅ The {dealer.name}'s cards is {dealer.initial_cards}.")
+    elif choice in "nN":
+        while True:
+            if dealer.score < 16:
+                dealer.get_card()
+                header('⏳ The Dealer is geting a new card...')
+                sleep(1)
+            elif dealer.score > 21:
+                header("🤣 You Win...")
+                print(
+                    f'✅ You current cards is {user.cards}, {user.score} total scores\n')
+                print(
+                    f"❌ The Dealer's card was {dealer.cards}, {dealer.score} total scores\n")
+                print()
+                exit()
+            elif dealer.score >= 16 and user.score > dealer.score:
+                header("🤣 You Win...")
+                print(f'✅ You current cards is {user.cards}, {user.score} total scores\n')
+                print(f"❌ The Dealer's card was {dealer.cards}, {dealer.score} total scores\n")
+                print()
+                exit()
+            else:
+                header('😢You loose...')
+                print(f'❌ You current cards is {user.cards}, {user.score} total scores')
+                print(f"✅ The Dealer's card was {dealer.cards}, {dealer.score} total scores")
+                print()
+                exit()
