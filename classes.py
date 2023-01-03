@@ -10,8 +10,8 @@ class User:
 
     def first_cards(self):
         '''Choice a couple of cards to player'''
-        self.cards.append(subtrai_carta())
-        self.cards.append(subtrai_carta())
+        for _ in range(2):
+            self.cards.append(subtrai_carta())
         self.update_score()
 
     def get_card(self):

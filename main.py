@@ -17,10 +17,12 @@ header("♠ The beginning.... ")
 print(f'✅ {user.name}, your cards is {user.cards} and total score is {user.score}')
 print(f"\n✅ The {dealer.name}'s cards is {dealer.initial_cards}.")
 
-
-header("♠ Let's continue?")
+# loop user
 while True:
+    header("♠ Let's continue?")
+
     choice = input('✅ Do you want get one more card ,Y or N?\n').strip()
+
     if choice in "yY":
         user.get_card()
         if user.score > 21:
@@ -37,28 +39,35 @@ while True:
                 f'\n✅ You current cards is {user.cards}, {user.score} total scores\n')
             print(f"\n✅ The {dealer.name}'s cards is {dealer.initial_cards}.")
     elif choice in "nN":
-        while True:
-            if dealer.score < 16:
-                dealer.get_card()
-                header('⏳ The Dealer is geting a new card...')
-                sleep(1)
-            elif dealer.score > 21:
-                header("🤣 You Win...")
-                print(
-                    f'✅ You current cards is {user.cards}, {user.score} total scores\n')
-                print(
-                    f"❌ The Dealer's card was {dealer.cards}, {dealer.score} total scores\n")
-                print()
-                exit()
-            elif dealer.score >= 16 and user.score > dealer.score:
-                header("🤣 You Win...")
-                print(f'✅ You current cards is {user.cards}, {user.score} total scores\n')
-                print(f"❌ The Dealer's card was {dealer.cards}, {dealer.score} total scores\n")
-                print()
-                exit()
-            else:
-                header('😢You loose...')
-                print(f'❌ You current cards is {user.cards}, {user.score} total scores')
-                print(f"✅ The Dealer's card was {dealer.cards}, {dealer.score} total scores")
-                print()
-                exit()
+        break
+
+# Loop dealer
+while True:
+    if dealer.score < 17:
+        dealer.get_card()
+        header('⏳ The Dealer is geting a new card...')
+        sleep(1)
+    elif dealer.score > 21:
+        header("🤣 You Win...")
+        print(
+            f'✅ You current cards is {user.cards}, {user.score} total scores\n')
+        print(
+            f"❌ The Dealer's card was {dealer.cards}, {dealer.score} total scores\n")
+        print()
+        exit()
+    elif dealer.score >= 17 and user.score > dealer.score:
+        header("🤣 You Win...")
+        print(
+            f'✅ You current cards is {user.cards}, {user.score} total scores\n')
+        print(
+            f"❌ The Dealer's card was {dealer.cards}, {dealer.score} total scores\n")
+        print()
+        exit()
+    else:
+        header('😢You loose...')
+        print(
+            f'❌ You current cards is {user.cards}, {user.score} total scores')
+        print(
+            f"✅ The Dealer's card was {dealer.cards}, {dealer.score} total scores")
+        print()
+        exit()
